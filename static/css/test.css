@@ -1,0 +1,13 @@
+#main{
+    width:1600px;
+    height: 600px;
+    margin:0 auto;
+}
+#second{
+     width:600px;
+    height: 400px;
+    margin:0 auto;
+}
+body{
+    background-color: '#003';
+}

@@ -6,7 +6,7 @@ window.onload = function () {
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '音乐源数据'
+            text: '各流派音乐源数据统计量'
         },
         tooltip: {},
         legend: {
@@ -16,7 +16,7 @@ window.onload = function () {
             data: []
         },
         yAxis: {},
-        series: [ {
+        series: [{
             name: '统计量',
             type: 'bar',
             data: []
@@ -29,7 +29,7 @@ window.onload = function () {
         for (var i = 0; i < genre.length; i++) {
             option.xAxis.data[i] = genre[i];
         }
-        
+
 
     });
     $.get("/count", function (res) {
@@ -44,25 +44,31 @@ window.onload = function () {
         myChart.setOption(option);
     });
     //get rock
-    $.get('/rock',function(res){
-        var data=JSON.parse(res);
-       console.log(data);
-    chart2.setOption({
-         series: [
-            {
-                name: '访问来源',
-                type: 'pie',
-                radius: '55%',
-                data: [
-                    { value: 235, name: '视频广告' },
-                    { value: 274, name: '联盟广告' },
-                    { value: 310, name: '邮件营销' },
-                    { value: 335, name: '直接访问' },
-                    { value: 400, name: '搜索引擎' }
-                ]
-            }
-        ]
+    $.get('/rock', function (res) {
+        var temp = [];
+        var music = eval('(' + res + ')').genre;
+        var count = eval('(' + res + ')').count;
+        // alert(count[0]);
+        var option = {
+            title: {
+                text: 'rock类音乐统计数量'
+            },
+            series: [
+                {
+                    name: 'rock类音乐',
+                    type: 'pie',
+                    radius: '55%',
+                    data: []
+                }
+            ]
+        };
+        for (var i = 0; i < count.length; i++) {
+            var obj = { value: '', name: '' };
+            obj.value = count[i];
+            obj.name = music[i];
+            option.series[0].data[i] = obj;
+        }
+        chart2.setOption(option);
     });
-    });
-  
+
 }
